@@ -1,0 +1,5 @@
+export default {
+  LOGIN: "LOGIN",
+  LOGOUT: "LOGOUT",
+  SET_USER_INFORMATION: "SET_USER_INFORMATION",
+};
