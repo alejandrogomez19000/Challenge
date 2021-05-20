@@ -2,6 +2,7 @@ import actionTypes from "../actionTypes";
 
 const initialState = {
   isLogged: false,
+  user: {},
 };
 
 export default function authReducer(state = initialState, action) {
@@ -10,6 +11,7 @@ export default function authReducer(state = initialState, action) {
       return {
         ...state,
         isLogged: true,
+        user: action.user,
       };
     case actionTypes.LOGOUT:
       return {

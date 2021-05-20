@@ -8,4 +8,5 @@ export default {
   green: "#5FBA20",
   greenwhite: "#5FBA2066",
   darkenBlue: "#3B2F71",
+  transparentBlack: "rgba(0,0,0,0.4)",
 };

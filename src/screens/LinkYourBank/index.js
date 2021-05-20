@@ -16,7 +16,8 @@ const LinkYourBank = () => {
   const routes = useNavigationState((state) => state.routes);
   useEffect(() => {
     const backAction = () => {
-      if (routes[routes.length - 1].name === routeNames.LINK_YOUR_BANK) {
+      const currentRouteName = routes[routes.length - 1].name;
+      if (currentRouteName === routeNames.LINK_YOUR_BANK) {
         Alert.alert(
           "Hold on!",
           "Are you sure you want to exit the GoalsetterChallenge?",

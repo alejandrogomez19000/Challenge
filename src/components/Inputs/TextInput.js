@@ -56,7 +56,6 @@ const TextInputComponent = ({
   }, [isFilled, placeholderDisabled, placeholderActive]);
 
   const handleOnChange = useCallback((text) => {
-    setFieldValue(name, text);
     setIsFilled(text.length > 0);
   }, []);
 
@@ -64,9 +63,10 @@ const TextInputComponent = ({
     setIsFocused(true);
   };
 
-  const handleInputBlur = () => {
+  const handleEndEditing = (e) => {
     setIsFocused(false);
     setIsTouched(true);
+    setFieldValue(name, e.nativeEvent.text);
   };
 
   return (
@@ -94,8 +94,8 @@ const TextInputComponent = ({
           isFocused && styles.inputFocused,
           error && isTouched && styles.errorInput,
         ]}
+        onEndEditing={handleEndEditing}
         onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
         defaultValue={value}
         onChangeText={handleOnChange}
       />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   View,
@@ -11,6 +11,7 @@ import {
 import Banner from "../../components/Banner";
 import TextInput from "../../components/Inputs/TextInput";
 import ViewButton from "../../components/Inputs/ViewButton";
+import LoadingScreen from "../../components/LoadingScreen";
 
 import styles from "./styles";
 
@@ -19,8 +20,10 @@ import { routeNames } from "../../navigation/routes";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logInAction } from "../../redux/actions/authActions";
+
+import { fakeLogin } from "../../utils/helper";
 
 const Schema = Yup.object().shape({
   email: Yup.string().email().required(),
@@ -30,6 +33,8 @@ const Schema = Yup.object().shape({
 });
 
 const CreateAccount = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
   const initialValues = {
     firstName: "",
@@ -38,9 +43,17 @@ const CreateAccount = ({ navigation }) => {
     password: "",
   };
 
-  const submitForm = () => {
-    console.log("lanzando submitForm");
-    dispatch(logInAction());
+  const submitForm = async (values) => {
+    setIsLoading(true);
+    setErrorMessage("");
+    try {
+      const { user } = await fakeLogin(values);
+      setIsLoading(false);
+      dispatch(logInAction(user));
+    } catch (error) {
+      setIsLoading(false);
+      setErrorMessage(error.message);
+    }
   };
 
   const navigateTermOfServices = () => {
@@ -101,6 +114,9 @@ const CreateAccount = ({ navigation }) => {
                     iconName="password"
                   />
                 </View>
+                {errorMessage !== "" && (
+                  <Text style={styles.errorMessage}>{errorMessage}</Text>
+                )}
                 <Text style={styles.termOfServiceContainer}>
                   <Text style={styles.termOfServiceText}>
                     By creating this account, I agree that I am a U.S. resident,
@@ -127,6 +143,7 @@ const CreateAccount = ({ navigation }) => {
           )}
         </Formik>
       </ScrollView>
+      {isLoading && <LoadingScreen />}
     </SafeAreaView>
   );
 };

@@ -35,6 +35,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     position: "relative",
   },
+  errorMessage: {
+    color: colors.error,
+  },
 });
 
 export default styles;
