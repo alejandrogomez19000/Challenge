@@ -23,7 +23,7 @@ import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { logInAction } from "../../redux/actions/authActions";
 
-import { fakeLogin } from "../../utils/helper";
+import { fakeRegister } from "../../utils/helper";
 
 const Schema = Yup.object().shape({
   email: Yup.string().email().required(),
@@ -47,7 +47,7 @@ const CreateAccount = ({ navigation }) => {
     setIsLoading(true);
     setErrorMessage("");
     try {
-      const { user } = await fakeLogin(values);
+      const { user } = await fakeRegister(values);
       setIsLoading(false);
       dispatch(logInAction(user));
     } catch (error) {

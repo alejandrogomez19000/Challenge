@@ -1,4 +1,4 @@
-export const fakeLogin = (user) => {
+export const fakeRegister = (user) => {
   const userIsValid = () => {
     return (
       user.firstName.toLowerCase() === "test" &&
